@@ -1,3 +1,5 @@
+Contato para ajudar a codar: instagram: @_ramonj
+
 **Documentação do Sistema Web CS Scout**  
   
 - Visão Geral:  
