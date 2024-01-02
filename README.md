@@ -9,8 +9,10 @@ O CS Scout é um sistema web desenvolvido com Java Spring Boot no backend e Reac
   
 1.1 Cadastro de Usuário:  
 Os usuários podem se cadastrar fornecendo informações como nome, e-mail e senha.  
+
 1.2 Login:  
 Os usuários autenticam-se usando suas credenciais registradas.  
+
 2. Menu Principal:  
   
 2.1 Estrutura do Menu:  
