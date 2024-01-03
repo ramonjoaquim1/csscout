@@ -1,8 +1,8 @@
-package br.com.csscout;
+package br.com.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+ 
 @SpringBootApplication
 public class CsscoutApplication {
 
