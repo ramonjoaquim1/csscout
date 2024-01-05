@@ -16,15 +16,16 @@ public class ProdutoServico {
     private ProdutoRepositorio pr;
 
     @Autowired
-private RespostaModelo rm;
+    private RespostaModelo rm;
+
 //metodo pra listar todos os produtos
     public Iterable<ProdutoModelo> listar(){
 return pr.findAll();
     } 
 
-//metodo para cadastrar produto
+//metodo para cadastrar ou alterar produto
 
-public ResponseEntity<?> cadastrar (ProdutoModelo pm){
+public ResponseEntity<?> cadastrarAlterar (ProdutoModelo pm, String acao){
     if(pm.getNome().equals("")){
         rm.setMensagem("O nome do produto é obrigatório!");
         return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
@@ -32,7 +33,19 @@ public ResponseEntity<?> cadastrar (ProdutoModelo pm){
         rm.setMensagem("O nome da marca é obrigatória!");
         return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
     }else{
-        return new ResponseEntity<ProdutoModelo>(pr.save(pm), HttpStatus.CREATED);
+        if(acao.equals("cadastrar")){
+            return new ResponseEntity<ProdutoModelo>(pr.save(pm), HttpStatus.CREATED);
+    }else{
+       return new ResponseEntity<ProdutoModelo>(pr.save(pm), HttpStatus.OK); 
+        }
+        }
     }
-}
+
+    //Método para remover produtos
+    public ResponseEntity<RespostaModelo> remover(long codigo){
+        pr.deleteById(codigo);
+
+        rm.setMensagem("O produto foi removido com sucesso!");
+        return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
+    }
 }
