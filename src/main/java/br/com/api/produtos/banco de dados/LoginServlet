@@ -1,0 +1,68 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+
+        // Obtém os dados do formulário
+        String login = request.getParameter("login");
+        String senha = request.getParameter("senha");
+
+        PrintWriter out = response.getWriter();
+
+        try {
+            // Carrega o driver JDBC (substitua com o driver específico do seu banco)
+            Class.forName("seu_driver_jdbc");
+
+            // Conecta ao banco de dados (substitua com suas configurações)
+            Connection conn = DriverManager.getConnection("sua_url_jdbc", "seu_usuario", "sua_senha");
+
+            // Prepara a instrução SQL para verificar as credenciais (substitua com a tabela e colunas reais)
+            String sql = "SELECT * FROM tabela_usuarios WHERE login = ? AND senha = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                // Define os parâmetros
+                pstmt.setString(1, login);
+                pstmt.setString(2, senha);
+
+                // Executa a consulta
+                ResultSet rs = pstmt.executeQuery();
+
+                // Verifica se o login é bem-sucedido
+                if (rs.next()) {
+                    // Cria uma sessão para armazenar as informações do usuário
+                    HttpSession session = request.getSession();
+                    session.setAttribute("usuario", login);
+
+                    // Redireciona para a página de tela inicial (substitua com o caminho real)
+                    response.sendRedirect("pagina_inicial.jsp");
+                } else {
+                    out.println("Credenciais inválidas. Tente novamente.");
+                }
+            }
+
+            // Fecha a conexão com o banco de dados
+            conn.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            out.println("Erro ao autenticar: " + e.getMessage());
+        }
+    }
+}
