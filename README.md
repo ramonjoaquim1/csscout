@@ -40,6 +40,8 @@ Os usuários votam no melhor jogador entre duas opções.
 3.2 Melhor Jogada da Semana:  
 Os usuários escolhem a melhor jogada da semana em uma votação entre duas opções.  
 
+Terá tambem nos jogadores pontos corridos em todos os players/usuarios cadastrados que em mes em mes tera um presente
+
 4. Tela de Times Amadores:  
   
 4.1 Criação de Times:  
